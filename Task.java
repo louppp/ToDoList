@@ -23,7 +23,7 @@ public class Task {
     }
 
     public String toString() {
-        return "Type : " + Type + "\nDesciption : " + Desciption + "\nDo : " + Do;
+        return "\nType : " + Type + "\nDesciption : " + Desciption + "\nDo : " + Do;
     }
 
 }

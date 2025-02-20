@@ -42,14 +42,42 @@ public class ToDoList {
         } else if(Choose == 2) {
 
             System.out.print("\033[H\033[2J");
+
             for(int i = 0; i < list.size(); i++) {
-                System.out.println(list.get(i).toString);
+                System.out.println(list.get(i).toString());
             }
+
             System.out.print("1. Quit ");
             int TypeInt = sc.nextInt();
+
+        } else if(Choose == 3) {
+
+            System.out.print("\033[H\033[2J");
+
+            for(int i = 0; i < list.size(); i++) {
+                if(list.get(i).getDo() == false) {
+                    System.out.print(i + ". ");
+                    System.out.println(list.get(i).toString() + "\n");
+                }
+            }
+            System.out.print("1. Delete \n2. Quit ");
+            int TypeInt = sc.nextInt();
+
+            if(TypeInt == 1) {
+                System.out.print("\033[H\033[2J");
+                System.out.print("Task Number : ");
+                int TaskNumber = sc.nextInt();
+                if (TaskNumber >= 0 && TaskNumber < list.size()) {
+                        list.remove(TaskNumber);
+                    } else {
+                        System.out.println("Invalid task number.");
+                    }
+                } else if (TypeInt == 2) {
+                    continue;
+                }
+
         }
-       }
+        }
+
     }
-
-
 }
