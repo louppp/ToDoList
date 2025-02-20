@@ -21,4 +21,9 @@ public class Task {
     public Boolean getDo() {
         return Do;
     }
+
+    public String toString() {
+        return "Type : " + Type + "\nDesciption : " + Desciption + "\nDo : " + Do;
+    }
+
 }
