@@ -1,10 +1,10 @@
-README - Gestionnaire de To-Do List
+# README - Gestionnaire de To-Do List
 
-Description
+## Description
 
 Le Gestionnaire de To-Do List est une application simple et efficace permettant de créer, organiser et gérer vos tâches quotidiennes. Conçu pour être intuitif et léger, ce logiciel vous aide à rester productif en suivant vos tâches et échéances.
 
-Fonctionnalités
+## Fonctionnalités
 
 Ajout, modification et suppression de tâches
 
