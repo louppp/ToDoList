@@ -2,108 +2,104 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class ToDoList {
+    private static ArrayList<Task> list = new ArrayList<>();
+    private static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
-        
-        ArrayList<Task> list = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.print("\033[H\033[2J");
+            System.out.println("1. Create New Task\n2. List Of Task\n3. Complete Task\n4. Delete Task");
 
-        while(true) {
+            int choose = sc.nextInt();
 
+            switch (choose) {
+                case 1 -> createTask();
+                case 2 -> listTasks();
+                case 3 -> completeTask();
+                case 4 -> deleteTask();
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void createTask() {
         System.out.print("\033[H\033[2J");
-        System.out.println("1. Create New Task\n2. List Of Task\n3. Complit Task\n4. Delete Task");
+        System.out.println("1. JOB\n2. SCHOOL\n3. PERSONAL");
+        System.out.print("Type : ");
+        int typeInt = sc.nextInt();
+        TaskType type = switch (typeInt) {
+            case 1 -> TaskType.JOB;
+            case 2 -> TaskType.SCHOOL;
+            case 3 -> TaskType.PERSONAL;
+            default -> TaskType.PERSONAL;
+        };
 
-        int Choose = sc.nextInt();
+        sc.nextLine();
+        System.out.print("\033[H\033[2J");
+        System.out.print("Description : ");
+        String description = sc.nextLine();
 
-        TaskType Type = TaskType.JOB;
-        Task task;
+        Task task = new Task(type, description, false);
+        list.add(task);
+    }
 
-        if(Choose == 1) {
+    private static void listTasks() {
+        justListTasks();
+        System.out.print("\n1. Quit ");
+        sc.nextInt();
+    }
+
+    private static void completeTask() {
+        justListTasksDo();
+        System.out.print("1. Do \n2. Quit ");
+        int typeInt = sc.nextInt();
+
+        if (typeInt == 1) {
             System.out.print("\033[H\033[2J");
-            System.out.println("1. JOB\n2. SCHOOL\n3. PERSONAL");
-            System.out.print("Type : ");
-            int TypeInt = sc.nextInt();
-
-            switch (TypeInt) {
-            case 1 -> Type = TaskType.JOB;
-            case 2 -> Type = TaskType.SCHOOL;
-            case 3 -> Type = TaskType.PERSONAL;
+            justListTasksDo();
+            System.out.print("Task Number : ");
+            int taskNumber = sc.nextInt();
+            if (taskNumber >= 0 && taskNumber < list.size()) {
+                list.get(taskNumber).Do = true;
+            } else {
+                System.out.println("Invalid task number.");
             }
-        
-            Scanner scan = new Scanner(System.in);
-
-            System.out.print("\033[H\033[2J");
-            System.out.print("Desciption : ");
-            String Desciption = scan.nextLine();
-
-            task = new Task(Type, Desciption, false);
-
-            list.add(task);
-
-        } else if(Choose == 2) {
-
-            System.out.print("\033[H\033[2J");
-
-            for(int i = 0; i < list.size(); i++) {
-                System.out.println(list.get(i).toString());
-            }
-
-            System.out.print("1. Quit ");
-            int TypeInt = sc.nextInt();
-
-        } else if(Choose == 3) {
-
-            System.out.print("\033[H\033[2J");
-
-            for(int i = 0; i < list.size(); i++) {
-                if(list.get(i).getDo() == false) {
-                    System.out.print(i + ". ");
-                    System.out.println(list.get(i).toString() + "\n");
-                }
-            }
-            System.out.print("1. Do \n2. Quit ");
-            int TypeInt = sc.nextInt();
-
-            if(TypeInt == 1) {
-                System.out.print("\033[H\033[2J");
-                System.out.print("Task Number : ");
-                int TaskNumber = sc.nextInt();
-                if (TaskNumber >= 0 && TaskNumber < list.size()) {
-                        list.get(TaskNumber).Do = true;
-                    } else {
-                        System.out.println("Invalid task number.");
-                    }
-                } else if (TypeInt == 2) {
-                    continue;
-                }
-
-        }else if(Choose == 4) {
-
-            System.out.print("\033[H\033[2J");
-
-            for(int i = 0; i < list.size(); i++) {
-                if(list.get(i).getDo() == false) {
-                    System.out.print(i + ". ");
-                    System.out.println(list.get(i).toString() + "\n");
-                }
-            }
-            System.out.print("1. Delete \n2. Quit ");
-            int TypeInt = sc.nextInt();
-
-            if(TypeInt == 1) {
-                System.out.print("\033[H\033[2J");
-                System.out.print("Task Number : ");
-                int TaskNumber = sc.nextInt();
-                if (TaskNumber >= 0 && TaskNumber < list.size()) {
-                        list.remove(TaskNumber);
-                    } else {
-                        System.out.println("Invalid task number.");
-                    }
-                } else if (TypeInt == 2) {
-                    continue;
-                }
-
         }
-        }
+    }
 
+    private static void deleteTask() {
+        justListTasks();
+        System.out.print("1. Delete \n2. Quit ");
+        int typeInt = sc.nextInt();
+
+        if (typeInt == 1) {
+            System.out.print("\033[H\033[2J");
+            justListTasks();
+            System.out.print("Task Number : ");
+            int taskNumber = sc.nextInt();
+            if (taskNumber >= 0 && taskNumber < list.size()) {
+                list.remove(taskNumber);
+            } else {
+                System.out.println("Invalid task number.");
+            }
+        }
+    }
+
+    private static void justListTasks () {
+        System.out.print("\033[H\033[2J");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print(i + ". ");
+            System.out.println(list.get(i).toString() + "\n");
+        }
+    }
+
+    private static void justListTasksDo () {
+        System.out.print("\033[H\033[2J");
+        for (int i = 0; i < list.size(); i++) {
+            if (!list.get(i).getDo()) {
+                System.out.print(i + ". ");
+                System.out.println(list.get(i).toString() + "\n");
+            }
+        }
     }
 }
