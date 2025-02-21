@@ -8,7 +8,7 @@ public class ToDoList {
     public static void main(String[] args) {
         while (true) {
             System.out.print("\033[H\033[2J");
-            System.out.println("1. Create New Task\n2. List Of Task\n3. Complete Task\n4. Delete Task");
+            System.out.println("1. Create New Task\n2. List Of Task\n3. Complete Task\n4. Delete Task\n5. Edit Task");
 
             int choose = sc.nextInt();
 
@@ -17,6 +17,7 @@ public class ToDoList {
                 case 2 -> listTasks();
                 case 3 -> completeTask();
                 case 4 -> deleteTask();
+                case 5 -> editTask();  
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
@@ -82,6 +83,33 @@ public class ToDoList {
             } else {
                 System.out.println("Invalid task number.");
             }
+        }
+    }
+
+    private static void editTask() {
+        justListTasks();
+        System.out.print("Task Number to Edit: ");
+        int taskNumber = sc.nextInt();
+        System.out.print("\033[H\033[2J");
+        if (taskNumber >= 0 && taskNumber < list.size()) {
+            Task task = list.get(taskNumber);
+            System.out.println("1. JOB\n2. SCHOOL\n3. PERSONAL");
+            System.out.print("New Type: ");
+            int typeInt = sc.nextInt();
+            TaskType newType = switch (typeInt) {
+                case 1 -> TaskType.JOB;
+                case 2 -> TaskType.SCHOOL;
+                case 3 -> TaskType.PERSONAL;
+                default -> TaskType.PERSONAL;
+            };
+            System.out.print("\033[H\033[2J");
+            System.out.print("New Description: ");
+            sc.nextLine(); // Consume newline
+            String newDescription = sc.nextLine();
+            task.Desciption = newDescription;
+            task.Type = newType;
+        } else {
+            System.out.println("Invalid task number.");
         }
     }
 
